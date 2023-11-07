@@ -3,6 +3,10 @@
 Task Description: Build the Open Source Computer Vision (OpenCV) C++ library from its source code. Develop a program that accesses a webcam and captures video frames. Additionally, write code to display the webcam feed in both grayscale and RGB format.
 ### Task Submission :
 * Clean Code
+* How Computers See Images ?
+* Getting Started with OpenCV
+* Open Camera Device with OpenCV
+* Showing in both RGB and Grayscale
 * Object Oriented Programming (OOP)
 * Must Know How to Check Video Devices in Linux
 * Fork This Repository and Commit Your Codes on It
