@@ -1,0 +1,104 @@
+#include <opencv2/opoencv.hpp>
+//پردازش تصویر و بینایی ماشین
+//با استفاده از ماتریکس = پیکسل 0 تا 225 
+//rgb یا bgr برعکس 
+#include <iostream>
+
+using namespace std ; 
+//iostream
+using namespace cv ; 
+//opencv
+
+class Camera {
+private:
+    //دسترسی به همان کلاس
+      VideoCapture camera ;
+      //یک کلاس  به اسم ویدیو کپچر که یک object کمرا ساختیم.
+      // ضبط و ذخیره ویدیو 
+public:
+    //دسترسی به همه کلاس ها
+    Camera() {
+        //تابع
+     
+        camera.open(0);
+        //تابع .open 
+        //0=کمرا سیستم را باز کن 1 هم می شود
+        //همه تابع ها در opencv است فقط فراخوانی
+
+     
+        if (!camera.isOpened()) {
+            //کد هندلینگ :کمرا باز نشد ارور بده و خارج بشو!
+            std::cout << "errosr to open camera !!! " << endl;
+            exit(-1);
+            //یا 0 یا -1 برای loop -1 است کلا برنامه را ببند.
+        }
+    }
+
+    ~Camera() {
+        //حافظه رو  ازاد کنه ما تخریب را تعریف میکنیم
+     
+        camera.release();
+        //مخرب کمرا تابع است
+        //آزادسازی
+    }
+
+    void displayRGBImage() {
+        // تابعی که مقدار برنمیگرداند  return نداره 
+        // نمایش تصویر بصورت رنگی
+    
+          namedWindow("RGB Image", WINDOW_NORMAL);
+          //تابع در open cv و ایجاد پنجره ==اسم و اندازه پنجره و نرمال است برای تغییرات سایز میشه استفاده کرد
+
+        while (true) {
+            //حلقه بی نهایت که وقتی دوربین را باز میکنیم بسته نشه برنامه
+            Mat frame, grayscaleFrame;
+            // mat یک کلاس از open cv است
+            //frame = rgb= رنگی
+            //gray fram=خاکستری یا سیاه و سفید
+
+         
+            camera >> frame;
+            //تصویر را ریخته در کلاس کمرا
+            // دریافت frame
+            
+           
+            imshow("RGB Image", frame);
+            //نمایش پنجره ساخته شده به اسم rgb image 
+            // ورودی frame است
+            cvtColor(frame, grayscaleFrame, COLOR_BGR2GRAY);
+            //تابع cvtcolor تبدیل تصویر رنگی به سیاه و سفید
+            //frame و gray scale رو به تابع cvtcolor پاس میدیم
+            //COLOR_BGR2GRAY :تصویر رنگی به سیاه و سفید
+            // ترتیب اصلی bgr 
+            //frame رو به grayscaleFrame تبدیل می کنیم
+            imshow("Grayscale Image", grayscaleFrame);
+            //نشان دادن پنجره به اسم Grayscale Image
+            //grayscaleFrame بهش میدیم برای نمایش
+    
+            int key = waitKey(1);
+            //متغیر به اسم key 
+            //را تعریف کردیم تابع waitkey
+            // کاربر یک کلیدی از کیبورد را بزنه از حلقه خارج میشه
+            // ولی من بهش دکمه e را دادم که بیاد بیرون ازش 
+            // e بیاد بیرون: 
+
+
+            if (key == 'e')
+                break;
+        }
+
+         destroyWindow("RGB Image");
+         //پنجره رو تخریب میکنه
+    }
+
+};
+
+int main() {
+    Camera camera;
+     // کلاس کمرا رو یک obgect ساختیم برای دسترسی به توابع کلاس کمرا
+    camera.displayRGBImage();
+    //فراخوانی و اجرای تابع displayRGBImage
+    cv::destroyAllWindows();
+    //تخریب کلی پنجره
+    return 0;
+}
